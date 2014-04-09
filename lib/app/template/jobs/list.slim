@@ -1,0 +1,22 @@
+- for job in jobs
+  article data-id=job.id
+    progress value=job.progress
+    header
+      h1: a href=url(job) = job.id
+
+javascript:
+
+  var source = new EventSource("#{{ url("/events") }}");
+
+  source.addEventListener("update", function (event) {
+    var data = JSON.parse(event.data);
+    console.log(data);
+
+    var job = document.querySelector("article[data-id='" + data.id + "']");
+
+    if (job) {
+      var progress = job.querySelector("progress");
+
+      progress.value = data.progress;
+    }
+  }, false);

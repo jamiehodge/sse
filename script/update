@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+
+require_relative "../lib/app"
+
+loop do
+  App::Model::Job.each do |job|
+    job.update(progress: rand)
+  end
+  sleep(1)
+end
